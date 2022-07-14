@@ -9,13 +9,13 @@ class AuthenticationService
 {
   public function verifyUser($request)
   {
-    $user = User::where('username', $request->username)->firstOrFail();
+    $user = User::where('username', $request->username)->first();
 
-    if (!Hash::check($request->password, $user->password)) {
+    if (!$user || !Hash::check($request->password, $user->password)) {
       return false;
     }
 
-    session(['user' => $user->username]);
+    session(['logged_in' => true]);
     return true;
   }
 }

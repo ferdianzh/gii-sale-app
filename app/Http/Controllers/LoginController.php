@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Services\AuthenticationService;
-use Error;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -26,7 +24,7 @@ class LoginController extends Controller
         $valid = $this->authService->verifyUser($request);
         
         if (!$valid) {
-            return redirect()->route('login')->with('message', 'username or password invalid');
+            return redirect()->route('login')->with('message', 'Username or password invalid');
         }
 
         return redirect()->route('main');
@@ -34,7 +32,7 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        $request->session()->pull('user');
+        $request->session()->pull('logged_in');
 
         return redirect()->route('login');
     }

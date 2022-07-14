@@ -10,8 +10,7 @@ class Authenticate extends Middleware
 {
     public function handle($request, Closure $next, $guards = null)
     {
-        $user = $request->session()->get('user');
-        $valid = User::where('username', $user)->first();
+        $valid = $request->session()->get('logged_in');
         
         if (!$valid) {
             return redirect()->route('login');
